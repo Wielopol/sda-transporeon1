@@ -1,7 +1,12 @@
 package pl.sda.java.adv.school;
 
 import pl.sda.java.adv.school.model.Student;
+import pl.sda.java.adv.school.util.CsvStudentsLoader;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,5 +59,96 @@ public class StudentService {
 
         return students.stream()
                 .collect(Collectors.groupingBy(student -> student.getAddress().getCity()));
+    }
+
+    public static void main(String[] args) {
+
+        CsvStudentsLoader csvStudentsLoader = new CsvStudentsLoader();
+        List<Student> students;
+
+        try (InputStream inputStream = Files.newInputStream(Path.of("students.csv"))) {
+            students = csvStudentsLoader.loadData(inputStream);
+        } catch (IOException e) {
+            students = Collections.emptyList();
+            e.printStackTrace();
+        }
+
+        students.forEach(System.out::println);
+
+        List<Student> studentsToSort = new LinkedList<>(students);
+
+        studentsToSort = studentsToSort.stream()
+                .sorted(Comparator.comparing(Student::getBirthDate).reversed())
+                .collect(Collectors.toList());
+
+        System.out.println();
+
+        studentsToSort.forEach(System.out::println);
+
+        studentsToSort = studentsToSort.stream()
+                .sorted(Comparator.comparing(Student::getBirthDate))
+                .collect(Collectors.toList());
+
+        System.out.println();
+
+        studentsToSort.forEach(System.out::println);
+
+        studentsToSort = studentsToSort.stream().sorted(new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                int cityResult = o1.getAddress().getCity().compareTo(o2.getAddress().getCity());
+                if (cityResult == 0) {
+                    return o1.getLastName().compareTo(o2.getLastName());
+                }
+                return cityResult;
+            }
+        }).collect(Collectors.toList());
+
+        System.out.println();
+
+        studentsToSort.forEach(System.out::println);
+
+        List<Student> studentsFiltered = studentsToSort.stream()
+                .filter(s -> s.getSchoolYear() == 8)
+                .sorted(new Comparator<Student>() {
+                    @Override
+                    public int compare(Student o1, Student o2) {
+                        int lastNameResult = o1.getLastName().compareTo(o2.getLastName());
+                        if (lastNameResult == 0) {
+                            return o1.getFirstName().compareTo(o2.getFirstName());
+                        }
+                        return lastNameResult;
+                    }
+                }).collect(Collectors.toList());
+
+        System.out.println();
+
+        studentsFiltered.forEach(System.out::println);
+    }
+
+    public List<Student> getStudentsSortedByAgeAsc() {
+        return students.stream()
+                .sorted(Comparator.comparing(Student::getBirthDate).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<Student> getStudentsSortedByAgeDesc() {
+        return null;
+    }
+
+    public List<Student> getStudentsSortedByCityAndLastName() {
+        return null;
+    }
+
+    public List<Student> getStudentsByYearSortedByLastAndFirstName(byte classCode) {
+        return null;
+    }
+
+    public List<Student> getStudentsWhichRepeatedAYear() {
+        return null;
+    }
+
+    public Set<Student> getOldestStudentFromEachCity() {
+        return null;
     }
 }
