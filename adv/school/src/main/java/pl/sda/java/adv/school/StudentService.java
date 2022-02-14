@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -133,22 +134,37 @@ public class StudentService {
     }
 
     public List<Student> getStudentsSortedByAgeDesc() {
-        return null;
+        return students.stream()
+                .sorted(Comparator.comparing(Student::getBirthDate))
+                .collect(Collectors.toList());
     }
 
     public List<Student> getStudentsSortedByCityAndLastName() {
-        return null;
+        return students.stream()
+                .sorted(Comparator.comparing(student -> student.getAddress().getCity() + student.getLastName()))
+                .collect(Collectors.toList());
     }
 
     public List<Student> getStudentsByYearSortedByLastAndFirstName(byte classCode) {
-        return null;
+        return students.stream()
+                .filter(student -> student.getSchoolYear() == 8)
+                .sorted(Comparator.comparing(student -> student.getLastName() + student.getFirstName()))
+                .collect(Collectors.toList());
     }
 
     public List<Student> getStudentsWhichRepeatedAYear() {
-        return null;
+        return students.stream()
+                .filter(student -> (LocalDate.now().getYear() - student.getSchoolYear() > student.getStartYear()))
+                .collect(Collectors.toList());
     }
 
-    public Set<Student> getOldestStudentFromEachCity() {
-        return null;
+    public Map<String, Optional<Student>> getOldestStudentFromEachCity() {
+        return students.stream().collect(Collectors.groupingBy(student -> student.getAddress().getCity(),
+                Collectors.minBy(Comparator.comparing(Student::getBirthDate))));
+    }
+
+    public double getRatioOfStudentsNotFrom(String city) {
+        return ((double) (students.stream().filter(student -> !student.getAddress().getCity().equals(city))
+                .count()) / (double) students.size()*100);
     }
 }

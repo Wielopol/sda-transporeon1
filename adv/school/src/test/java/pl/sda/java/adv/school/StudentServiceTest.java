@@ -1,5 +1,6 @@
 package pl.sda.java.adv.school;
 
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sda.java.adv.school.model.Student;
@@ -170,13 +171,13 @@ class StudentServiceTest {
 //        assertThat(cityToStudentMap.get("Wieliczka").getId()).isEqualTo("00001006");
 //        assertThat(cityToStudentMap.get("Zabierzów").getId()).isEqualTo("00002004");
 //    }
-//
-//    @Test
-//    void getRatioOfStudentsNotFrom() {
-//        //WHEN
-//        var ratio = studentService.getRatioOfStudentsNotFrom("Kraków");
-//
-//        //THEN
-//        assertThat(ratio).isCloseTo(60.0, Offset.offset(0.001));
-//    }
+
+    @Test
+    void getRatioOfStudentsNotFrom() {
+        //WHEN
+        var ratio = studentService.getRatioOfStudentsNotFrom("Kraków");
+
+        //THEN
+        assertThat(ratio).isCloseTo(60.0, Offset.offset(0.001));
+    }
 }
