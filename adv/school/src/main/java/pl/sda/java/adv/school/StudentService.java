@@ -192,4 +192,9 @@ public class StudentService {
                 .filter(student -> !student.getAddress().getCity().equals(city))
                 .count() * 100d / students.size();
     }
+
+    public Map<SchoolGroup,List<Student>> getStudentsBySchoolGroup() {
+        return students.stream()
+                .collect(Collectors.groupingBy(student -> new SchoolGroup(student.getSchoolYear(),student.getClassCode())));
+    }
 }
