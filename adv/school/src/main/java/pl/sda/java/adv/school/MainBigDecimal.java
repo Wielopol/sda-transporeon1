@@ -1,6 +1,7 @@
 package pl.sda.java.adv.school;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class MainBigDecimal {
     public static void main(String[] args) {
@@ -20,9 +21,9 @@ public class MainBigDecimal {
         BigDecimal bd100c = new BigDecimal("100.00");
         System.out.printf("values: %s, %s, %s\n", bd100a, bd100b, bd100c);
 
-        System.out.println(bd100a == bd100b); //false
-        System.out.println(bd100a.equals(bd100b)); //true
-        System.out.println(bd100a.equals(bd100c)); //false, because despite having same value, scale/precision can be diffrent
-        System.out.println(bd100a.compareTo(bd100c) == 0); //true, ALWAYS compare BigDecimal value using compareTo(...)
+        System.out.println(bd100a == bd100b);
+        System.out.println(bd100a.equals(bd100b));
+        System.out.println(bd100a.equals(bd100c));
+        System.out.println(bd100a.compareTo(bd100c) == 0);
     }
 }

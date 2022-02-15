@@ -41,7 +41,7 @@ class GradeUtilsTest {
 
     @ParameterizedTest
     @MethodSource
-    void shouldReturnExpectedAvarage(List<Grade> grades, BigDecimal expectedResult) {
+    void shouldReturnExpectedAverage(List<Grade> grades, BigDecimal expectedResult) {
         //WHEN
         final var result = GradeUtils.gradesAverage(grades);
 
@@ -50,7 +50,7 @@ class GradeUtilsTest {
         assertThat(result.get()).isEqualByComparingTo(expectedResult);
     }
 
-    static List<Arguments> shouldReturnExpectedAvarage() {
+    static List<Arguments> shouldReturnExpectedAverage() {
         return List.of(
                 Arguments.of(
                         List.of(grade(GradeWeight.EGZ, "4.75")),
