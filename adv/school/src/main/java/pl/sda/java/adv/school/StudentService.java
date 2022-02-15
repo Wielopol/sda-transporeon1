@@ -145,26 +145,28 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public List<Student> getStudentsByYearSortedByLastAndFirstName(byte classCode) {
+    public List<Student> getStudentsByYearSortedByLastAndFirstName(byte schoolYear) {
         return students.stream()
-                .filter(student -> student.getSchoolYear() == 8)
+                .filter(student -> student.getSchoolYear() == schoolYear)
                 .sorted(Comparator.comparing(student -> student.getLastName() + student.getFirstName()))
                 .collect(Collectors.toList());
     }
 
     public List<Student> getStudentsWhichRepeatedAYear() {
         return students.stream()
-                .filter(student -> (LocalDate.now().getYear() - student.getSchoolYear() > student.getStartYear()))
+                .filter(student -> 2022 - student.getSchoolYear() > student.getStartYear())
                 .collect(Collectors.toList());
     }
 
     public Map<String, Optional<Student>> getOldestStudentFromEachCity() {
-        return students.stream().collect(Collectors.groupingBy(student -> student.getAddress().getCity(),
+        return students.stream()
+                .collect(Collectors.groupingBy(student -> student.getAddress().getCity(),
                 Collectors.minBy(Comparator.comparing(Student::getBirthDate))));
     }
 
     public double getRatioOfStudentsNotFrom(String city) {
-        return ((double) (students.stream().filter(student -> !student.getAddress().getCity().equals(city))
-                .count()) / (double) students.size()*100);
+        return (double) students.stream()
+                .filter(student -> !student.getAddress().getCity().equals(city))
+                .count() / (double) students.size()*100;
     }
 }
