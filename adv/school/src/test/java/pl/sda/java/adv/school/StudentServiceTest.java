@@ -155,22 +155,22 @@ class StudentServiceTest {
                 .containsExactlyInAnyOrder("00001003", "00001008", "00002004");
     }
 
-//    @Test
-//    void getOldestStudentFromEachCity() {
-//        //WHEN
-//        var cityToStudentMap = studentService.getOldestStudentFromEachCity();
-//
-//        //THEN
-//        assertThat(cityToStudentMap.size()).isEqualTo(8);
-//        assertThat(cityToStudentMap.get("Balice").getId()).isEqualTo("00002002");
-//        assertThat(cityToStudentMap.get("Kłaj").getId()).isEqualTo("00002005");
-//        assertThat(cityToStudentMap.get("Kraków").getId()).isEqualTo("00002003");
-//        assertThat(cityToStudentMap.get("Krzeszowice").getId()).isEqualTo("00001003");
-//        assertThat(cityToStudentMap.get("Modlniczka").getId()).isEqualTo("00001005");
-//        assertThat(cityToStudentMap.get("Skawina").getId()).isEqualTo("00002001");
-//        assertThat(cityToStudentMap.get("Wieliczka").getId()).isEqualTo("00001006");
-//        assertThat(cityToStudentMap.get("Zabierzów").getId()).isEqualTo("00002004");
-//    }
+    @Test
+    void getOldestStudentFromEachCity() {
+        //WHEN
+        var cityToStudentMap = studentService.getOldestStudentFromEachCity();
+
+        //THEN
+        assertThat(cityToStudentMap.size()).isEqualTo(8);
+        assertThat(cityToStudentMap.get("Balice").getId()).isEqualTo("00002002");
+        assertThat(cityToStudentMap.get("Kłaj").getId()).isEqualTo("00002005");
+        assertThat(cityToStudentMap.get("Kraków").getId()).isEqualTo("00002003");
+        assertThat(cityToStudentMap.get("Krzeszowice").getId()).isEqualTo("00001003");
+        assertThat(cityToStudentMap.get("Modlniczka").getId()).isEqualTo("00001005");
+        assertThat(cityToStudentMap.get("Skawina").getId()).isEqualTo("00002001");
+        assertThat(cityToStudentMap.get("Wieliczka").getId()).isEqualTo("00001006");
+        assertThat(cityToStudentMap.get("Zabierzów").getId()).isEqualTo("00002004");
+    }
 
     @Test
     void getRatioOfStudentsNotFrom() {

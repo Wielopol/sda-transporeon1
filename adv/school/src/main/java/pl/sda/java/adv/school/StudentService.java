@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class StudentService {
@@ -158,15 +159,37 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public Map<String, Optional<Student>> getOldestStudentFromEachCity() {
+    public Map<String, Student> getOldestStudentFromEachCity() {
+//        return students.stream()
+//                .collect(Collectors.groupingBy(student -> student.getAddress().getCity(),
+//                Collectors.minBy(Comparator.comparing(Student::getBirthDate))))
+//                .values()
+//                .stream()
+//                .map(Optional::get)
+//                .collect(Collectors.toUnmodifiableMap(student -> student.getAddress().getCity(), Function.identity()));
+
+//        return students.stream()
+//                .collect(Collectors.toUnmodifiableMap(
+//                        student -> student.getAddress().getCity(),
+//                        student -> student,
+//                        (student, student2) -> {
+//                            if (student.getBirthDate().isBefore(student2.getBirthDate())) {
+//                                return student;
+//                            }
+//                            return student2;
+//                        }));
+
         return students.stream()
-                .collect(Collectors.groupingBy(student -> student.getAddress().getCity(),
-                Collectors.minBy(Comparator.comparing(Student::getBirthDate))));
+                .collect(Collectors.toUnmodifiableMap(
+                        student -> student.getAddress().getCity(),
+                        student -> student,
+                        (s1, s2) -> s1.getBirthDate().isBefore(s2.getBirthDate()) ? s1 : s2
+                ));
     }
 
     public double getRatioOfStudentsNotFrom(String city) {
-        return (double) students.stream()
+        return students.stream()
                 .filter(student -> !student.getAddress().getCity().equals(city))
-                .count() / (double) students.size()*100;
+                .count() * 100d / students.size();
     }
 }
